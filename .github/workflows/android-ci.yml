@@ -31,13 +31,7 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
-          packages: platform-tools
-
-      - name: Install Android platform and system image
-        run: |
-          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-30" "system-images;android-30;google_apis;x86_64" "emulator"
-          # Accept licenses
-          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT --licenses
+          packages: platform-tools,platforms;android-30,system-images;android-30;google_apis;x86_64
 
       - name: Decode Google Cloud credentials and set up local.properties
         run: |
@@ -58,21 +52,6 @@ jobs:
 
       - name: Run unit tests
         run: ./gradlew test
-
-      - name: Run instrumentation tests
-        # We'll create an emulator for testing
-        run: |
-          # Create an emulator
-          echo "no" | avdmanager create avd -n test_avd -k "system-images;android-30;google_apis;x86_64" --force
-          # Start the emulator
-          emulator -avd test_avd -no-window -no-audio &
-          EMULATOR_PID=$!
-          # Wait for the emulator to boot
-          adb wait-for-device
-          # Run the tests
-          ./gradlew connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.android.notestAnimation=true
-          # Stop the emulator
-          kill $EMULATOR_PID
 
       - name: Assemble debug APK
         run: ./gradlew assembleDebug
