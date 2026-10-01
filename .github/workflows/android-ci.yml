@@ -30,11 +30,10 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          api-level: 30
+          build-tools: 30.0.3
 
-      - name: Install platform, system image, and emulator
-        run: |
-          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platforms;android-30" "system-images;android-30;google_apis;x86_64" "emulator"
-          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT --licenses
 
       - name: Decode Google Cloud credentials and set up local.properties
         run: |
