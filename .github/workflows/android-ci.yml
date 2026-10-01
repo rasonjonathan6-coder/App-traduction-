@@ -12,10 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      # Needed to upload artifacts
-      id-token: write
 
     steps:
       - name: Checkout code
@@ -26,15 +22,10 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'gradle'
+          cache: gradle
 
       - name: Setup Android SDK
-        uses: actions/setup-android@v2
-        with:
-          api-level: 30
-          build-tools: 30.0.3
-          system-images: |
-            system-images;android-30;google_apis;x86_64
+        uses: android-actions/setup-android@v2
 
       - name: Decode Google Cloud credentials and set up local.properties
         run: |
