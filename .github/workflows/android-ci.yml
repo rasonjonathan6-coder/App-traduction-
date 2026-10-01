@@ -1,0 +1,92 @@
+name: Android CI
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
+      # Needed to upload artifacts
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Decode Google Cloud credentials and set up local.properties
+        run: |
+          echo "$GOOGLE_APPLICATION_CREDENTIALS_BASE64" | base64 --decode > ~/keys/heart-translate.json
+          # Create the directory if it doesn't exist
+          mkdir -p ~/.gradle
+          # We'll use gradle.properties for this example, but note that TranslationUtils reads from user.home
+          # Since TranslationUtils uses System.getProperty("user.home") + "/keys/heart-translate.json",
+          # we have already placed the file in ~/keys/heart-translate.json.
+          # So we don't need to modify gradle.properties for the TranslationUtils to work.
+          # However, if we want to make it configurable via gradle.properties, we can do:
+          # echo "google.application.credentials=$HOME/keys/heart-translate.json" >> ~/.gradle/gradle.properties
+          # But note: the current TranslationUtils does not read from gradle.properties.
+          # So we skip that step and rely on the file we placed in ~/keys/heart-translate.json.
+
+      - name: Verify credentials file exists
+        run: ls -l ~/keys/heart-translate.json
+
+      - name: Run unit tests
+        run: ./gradlew test
+
+      - name: Run instrumentation tests
+        # We'll create an emulator for testing
+        run: |
+          # Create an emulator
+          echo "no" | avdmanager create avd -n test_avd -k "system-images;android-30;google_apis;x86_64" --force
+          # Start the emulator
+          emulator -avd test_avd -no-window -no-audio &
+          EMULATOR_PID=$!
+          # Wait for the emulator to boot
+          adb wait-for-device
+          # Run the tests
+          ./gradlew connectedAndroidTest -Pandroid.testInstrumentationRunnerArguments.android.notestAnimation=true
+          # Stop the emulator
+          kill $EMULATOR_PID
+
+      - name: Assemble debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: |
+            app/build/reports/
+            app/build/test-results/
+
+      - name: Upload JaCoCo coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jacoco-report
+          path: app/build/reports/jacoco/testDebugUnitTestReport/html

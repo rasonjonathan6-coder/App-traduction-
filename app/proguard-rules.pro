@@ -1,0 +1,2 @@
+-keep class com.google.cloud.translate.** { *; }
+-keep class com.google.android.libraries.langid.** { *; }

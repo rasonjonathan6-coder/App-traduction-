@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TraductionFlottante</string>
+    <string name="accessibility_service_description">Service d\'accessibilité pour la traduction flottante</string>
+    <string name="instructions">Activez le service d\'accessibilité et l\'autorisation d\'apparition au premier plan pour utiliser cette application.</string>
+</resources>
+
+<string name="settings_title">Paramètres</string>
+<string name="settings_description">Cette application n'a pas de paramètres supplémentaires. Tous les paramètres sont gérés via les paramètres système d'accessibilité.</string>
+<string name="no_additional_settings">Aucun paramètre supplémentaire disponible</string>
