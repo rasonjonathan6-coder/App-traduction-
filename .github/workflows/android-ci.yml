@@ -26,6 +26,9 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
+        with:
+          api-level: 30
+          build-tools: 30.0.3
 
       - name: Decode Google Cloud credentials and set up local.properties
         run: |
