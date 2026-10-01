@@ -31,7 +31,7 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
         with:
-          cmdline-tools-version: latest
+          packages: platform-tools
 
       - name: Install Android platform and system image
         run: |
