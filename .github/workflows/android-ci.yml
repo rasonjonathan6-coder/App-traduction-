@@ -29,12 +29,13 @@ jobs:
           cache: 'gradle'
 
       - name: Setup Android SDK
-        uses: maierj/action-android-setup@v2
+        uses: android-actions/setup-android@v3
         with:
           api-level: 30
           target: google_apis
           arch: x86_64
           build-tools: 30.0.3
+          system-images: android-30;google_apis;x86_64
 
       - name: Decode Google Cloud credentials and set up local.properties
         run: |
