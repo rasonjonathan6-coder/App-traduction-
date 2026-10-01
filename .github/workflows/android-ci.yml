@@ -24,12 +24,20 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3
         with:
-          api-level: 30
-          build-tools: 30.0.3
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Skip Android SDK setup (simplified CI)
+        run: echo "Android SDK setup skipped for now"
+        
       - name: Decode Google Cloud credentials and set up local.properties
         run: |
           echo "$GOOGLE_APPLICATION_CREDENTIALS_BASE64" | base64 --decode > ~/keys/heart-translate.json
