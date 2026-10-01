@@ -82,3 +82,4 @@ The CI workflow performs the following:
 - **Test reports**: Available as artifacts named `test-results` and `jacoco-report`
 - **Workflow logs**: Available in the Actions tab of your repository
 
+# Release v1.0.0
