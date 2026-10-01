@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/settings_title"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginBottom="16dp"/>
 
@@ -17,14 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/settings_description"
-        android:layout_marginBottom="24dp"/>
+        android:textSize="16sp"/>
 
-    <!-- In a real app, we'd have actual settings here -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/no_additional_settings"
         android:textColor="#666666"
-        android:italic="true"/>
-
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"/>
 </LinearLayout>

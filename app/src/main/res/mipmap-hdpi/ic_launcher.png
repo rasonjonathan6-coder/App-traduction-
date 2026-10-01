@@ -1,0 +1,9 @@
+iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==
+EOF && cd /workspace/project/TraductionFlottante/app/src/main/res/mipmap-mdpi && cat > ic_launcher.png << 'EOF'
+iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==
+EOF && cd /workspace/project/TraductionFlottante/app/src/main/res/mipmap-xhdpi && cat > ic_launcher.png << 'EOF'
+iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==
+EOF && cd /workspace/project/TraductionFlottante/app/src/main/res/mipmap-xxhdpi && cat > ic_launcher.png << 'EOF'
+iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==
+EOF && cd /workspace/project/TraductionFlottante/app/src/main/res/mipmap-xxxhdpi && cat > ic_launcher.png << 'EOF'
+iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg==
