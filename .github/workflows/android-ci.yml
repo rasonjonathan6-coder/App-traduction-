@@ -28,10 +28,21 @@ jobs:
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-        with:
-          packages: platform-tools,platforms;android-30,system-images;android-30;google_apis;x86_64
+      - name: Install Android SDK
+        run: |
+          mkdir -p $HOME/Android/Sdk
+          cd $HOME/Android/Sdk
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip -o cmdline-tools.zip
+          unzip -q cmdline-tools.zip
+          rm cmdline-tools.zip
+          mv cmdline-tools latest
+          yes | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/Android/Sdk "platforms;android-30" "system-images;android-30;google_apis;x86_64" "emulator"
+          yes | $HOME/Android/Sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/Android/Sdk --licenses
+          echo "ANDROID_SDK_ROOT=$HOME/Android/Sdk" >> $GITHUB_ENV
+          echo "ANDROID_HOME=$HOME/Android/Sdk" >> $GITHUB_ENV
+          echo "$HOME/Android/Sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
+          echo "$HOME/Android/Sdk/platform-tools" >> $GITHUB_PATH
+          echo "$HOME/Android/Sdk/emulator" >> $GITHUB_PATH
 
       - name: Decode Google Cloud credentials and set up local.properties
         run: |
