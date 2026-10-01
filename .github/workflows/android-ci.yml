@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       # Needed to upload artifacts
@@ -33,7 +33,6 @@ jobs:
         with:
           api-level: 30
           build-tools: 30.0.3
-
 
       - name: Decode Google Cloud credentials and set up local.properties
         run: |
